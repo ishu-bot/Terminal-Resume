@@ -45,6 +45,64 @@ Follow the interactive prompts to enter your information, including name, design
 
 ### Example Commands
 
+- To show your name:
+
+```bash
+show name
+```
+
+- To show your skills:
+
+```bash
+show skills
+```
+
+- To clear the existing resume data:
+
+```bash
+clear
+```
+
+## Themes
+
+You can select different themes for your resume:
+Classic Light (default)
+Pastel Dream
+Neon Dark
+Select a theme from the dropdown menu when prompted during the resume creation process.
+
+## Custom Fields 
+
+You can also add custom fields to your resume. When prompted, type "CUSTOM" to create custom fields or "NOTHING" to proceed without them.
+
+## Contributing
+
+Contributions are welcome! If you would like to contribute to Terminal Resume, please follow these steps:
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature/YourFeature).
+3. Make your changes and commit them (git commit -m 'Add some feature').
+4. Push to the branch (git push origin feature/YourFeature).
+5. Open a Pull Request.
+
+
+## Licence 
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- Express - Fast, unopinionated, minimalist web framework for Node.js.
+- EJS - Embedded JavaScript templating.
+- Chalk - Terminal string styling done right.
+- Inquirer - A collection of common interactive command line user interfaces.
+
+## Contact
+
+For questions or feedback, feel free to reach out:
+Author: Ishu Gupta
+Email: your-email@example.com
+GitHub: ishu-bot
+Happy coding! 🎉
 
 
 
