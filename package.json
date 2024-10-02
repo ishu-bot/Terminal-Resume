@@ -1,0 +1,27 @@
+{
+  "name": "terminal-resume",
+  "version": "2.0.0",
+  "main": "index.js",
+  "bin": {
+    "terminal-resume": "index.js",
+    "Resume": "main.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "Resume": "node main.js"
+  },
+  "keywords": [],
+  "author": "Ishu Gupta",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.0.6",
+    "cfonts": "^3.3.0",
+    "chalk": "^5.3.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "inquirer": "^10.2.2",
+    "ora": "^8.1.0"
+  },
+  "description": "It's a resume creator package that can create you a resume with differnet templates and themes that it has It is a easy to use alternative of resume-cli package that was on npm . It is user friendly, flexibile and simple to use you can add custom fields in it as well, your resume can be shown up on your personal laptop cli by entering prompts given by it which is a cool way to flex among your friends"
+}
