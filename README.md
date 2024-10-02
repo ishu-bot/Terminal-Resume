@@ -33,3 +33,18 @@ To install the package locally, run:
 npm install terminal-resume
 ```
 
+## Usage
+
+After installation, you can create your resume by running the following command in your terminal:
+
+```bash
+terminal-resume
+```
+
+Follow the interactive prompts to enter your information, including name, designation, skills, experience, and more.
+
+### Example Commands
+
+
+
+
