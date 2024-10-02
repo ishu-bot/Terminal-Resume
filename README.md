@@ -1,4 +1,4 @@
-#Terminal Resume
+# Terminal Resume
 
 Terminal Resume is a command-line interface (CLI) tool that allows users to create customizable resumes with various themes. It is designed for developers and job seekers who prefer a flexible and user-friendly approach to resume building.
 
