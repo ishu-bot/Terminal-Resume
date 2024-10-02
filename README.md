@@ -23,11 +23,13 @@ To install the package globally, run:
 ```bash
 npm install -g terminal-resume
 
+```
+
 ### Local Installation
 
 To install the package locally, run:
 
 ```bash
 npm install terminal-resume
-
+```
 
