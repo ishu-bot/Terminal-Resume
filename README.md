@@ -2,7 +2,7 @@
 
 Terminal Resume is a command-line interface (CLI) tool that allows users to create customizable resumes with various themes. It is designed for developers and job seekers who prefer a flexible and user-friendly approach to resume building.
 
-#Features
+# Features
 
 Customizable Themes: Choose from multiple themes to personalize your resume.
 
@@ -15,7 +15,7 @@ To install the Terminal Resume package, run the following command:
 bash
 npm install terminal-resume
 
-#Usage
+# Usage
 
 After installation, you can create your resume by running:
 
@@ -24,7 +24,7 @@ npx terminal-resume
 
 Follow the prompts to enter your information, such as name, designation, skills, experience, and more.
 
-#Example
+# Example
 Here’s an example of how to use the tool:
 Run the command:
 
@@ -40,6 +40,6 @@ Projects: Portfolio website, CLI tool
 
 Select a theme and generate your resume!
 
-#Customization
+# Customization
 
 You can customize your resume by adding additional fields or modifying existing ones. The package supports various themes that can be selected during the setup process.
