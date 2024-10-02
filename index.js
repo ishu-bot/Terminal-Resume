@@ -6,7 +6,7 @@ import inquirer from 'inquirer';
 import fs from 'fs';
 import path from 'path';
 
-
+const dataFilePath = path.join('resumeData.json');
 let parsedData = ''
 let resumeData = {}; 
 let helpMode = false;
@@ -16,7 +16,7 @@ let helpMode = false;
  * Checks the format of the provided data.
  * @param {string} field - The field to check.
  */
-
+console.log(parsedData)
 async function formatChecker(field) {
     if(resumeData[field].length === 0 || resumeData[field].some(data => data === '' )){
      console.log(chalk.red('Please enter skills in the correct format, separated by commas.'));
@@ -86,7 +86,7 @@ console.log(chalk.rgb(255,0,0)('ENTER CORRECT ALIGNMENT VALUES ! '))
 return;
     }
 
-if(!resumeData[alignment.toUpperCase()]){
+    if(!resumeData[alignment.toUpperCase()]){
 resumeData[alignment.toUpperCase()] = {}
     }
     
@@ -118,9 +118,11 @@ console.log(chalk.black('YOU CAN EXIT BY TYPING "EXIT CUSTOM" AND ENTER AND IF W
 
  if(command.toUpperCase() === 'EXIT CUSTOM'){
     return
- }
-
+ }else if(command.toUpperCase() === 'MORE'){
     await customFieldCreator()
+    }else{
+     console.log(chalk.rgb(255,0,0)('ENTER CORRECT COMMAND ! WE ARE CONSIDERING THIS AS "EXIT CUSTOM" '))
+    }
 }
 
 
@@ -156,9 +158,7 @@ await new Promise(resolve => {
  */
 
 async function displayResume(){
-    const dataFilePath = path.join('resumeData.json');
-
-         cfonts.say('MY\nRESUME', {
+      cfonts.say('MY\nRESUME', {
 	font: 'simple',              // define the font face
 	align: 'center',              // define text alignment
 	colors: ['system'],         // define all colors
@@ -230,7 +230,7 @@ console.log(chalk.blue('✨ Tip: For a more beautiful resume, please enter field
 await formatChecker(info) 
      
     } else {
-resumeData[info] = response[info];
+        resumeData[info] = response[info];
  }
         }
 
@@ -251,10 +251,14 @@ console.log(chalk.blue(
       if(helpMode === true){ console.log(chalk.hex('#FFD700')('CONGRATULATIONS! NOW YOU CAN CREATE CUSTOM FIELDS \n'))
  }
         await customFieldCreator()
+        
+if(helpMode === true){ console.log(chalk.hex('#FFD700')('CONGRATULATIONS! NOW YOU CAN CREATE CUSTOM FIELDS \n'))                         }
     }else if (something.toUpperCase() === 'NOTHING'){
       
     if(helpMode === true){ console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
  }
+    }else{
+        console.log(chalk.rgb(255,0,0)('⚠️  WARNING: ENTER FROM ONLY CUSTOM OR NOTHING, WE ARE GOING TO TAKE IT AS NOTHING!'))
     }
 
         try {
@@ -273,7 +277,7 @@ fs.writeFileSync(dataFilePath, JSON.stringify( resumeData, null, 2));
 } catch (error) {
     console.error(chalk.rgb(255,0,0)('Error reading resume data:', error.message));
     // Optionally, prompt to create a new resume
-}
+    }
     await showLoadingSpinner()
 
        // Displaying user information
@@ -328,7 +332,8 @@ if (parsedData.LINE) {
 });    
                 }
         
-console.log(chalk.hex('#800080')('Type "exit" to quit.\n'));
+console.log(chalk.hex('#800080')('Type "exit" to quit.'));
+console.log(chalk.hex('#80003D')('You can clear the previous data by typing "clear" \n'));
  
 
 
@@ -427,7 +432,8 @@ console.log(chalk.cyanBright(experienceArr.slice(index+1).join(' ')) + '\n')
  const index = projectArr.indexOf('-')
    console.log(chalk.bold.hex("00FF00")( '-' + ' ' + projectArr.slice(0,index).join(' ')))      
 console.log(chalk.hex("00FF00")(projectArr.slice(index+1).join(' ')) + '\n')
-}else {            console.log(parsedData['Projects'].map(Data => chalk.hex("00FF00")(`- ${Data}`)).join('\n'));
+     
+            }else {            console.log(parsedData['Projects'].map(Data => chalk.hex("00FF00")(`- ${Data}`)).join('\n'));
         break
             }
     }
@@ -446,6 +452,16 @@ console.log(chalk.hex("00FF00")(projectArr.slice(index+1).join(' ')) + '\n')
         console.log(chalk.rgb(255, 0, 0)('No Contact-Info found.'));
               }
             break;
+case 'clear':
+    found = true;
+    try {
+        fs.unlinkSync(dataFilePath); // Synchronously delete the file
+        console.log(chalk.hex('#80008D')('Your Resume Data is Cleared!')); 
+        return
+    } catch (err) {
+        console.error('Error deleting file:', err); // Error handling
+    }
+    break;
     }
 
    // Exit command
@@ -484,3 +500,4 @@ if (parsedData.LIST) {  Object.keys(parsedData.LIST).forEach(Data => {
 }
 
 displayResume()
+
