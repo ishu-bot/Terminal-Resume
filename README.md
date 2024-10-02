@@ -100,7 +100,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For questions or feedback, feel free to reach out:
 Author: Ishu Gupta
-Email: your-email@example.com
+Email: devishu547@gmail.com
 GitHub: ishu-bot
 Happy coding! 🎉
 
