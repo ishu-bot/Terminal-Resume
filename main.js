@@ -1,14 +1,10 @@
 import express from 'express';
-import path from 'path';
 import fs from 'fs';
 
 const app = express();
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-
-// Set the directory for views (EJS templates)
-app.set('views', path.join('views'));
 
 // Serve static files (like CSS)
 app.use(express.static('public'));
@@ -37,8 +33,9 @@ function formatter(field) {
 }
 
 // Define a route to render the resume
-app.get('/resume', async (_, res) => {
-    const dataFilePath = path.join('resumeData.json');
+app.get('/', async (_, res) => {
+    const dataFilePath = 'resumeData.json';
+    
     try {
         const data = fs.readFileSync(dataFilePath);
         parsedData = JSON.parse(data);
@@ -84,5 +81,4 @@ Object.keys(parsedData.LINE).forEach(Data => {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-});
-
+})
