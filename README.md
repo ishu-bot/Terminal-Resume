@@ -38,10 +38,19 @@ npm install terminal-resume
 After installation, you can create your resume by running the following command in your terminal:
 
 ```bash
-terminal-resume
+npx terminal-resume
 ```
 
 Follow the interactive prompts to enter your information, including name, designation, skills, experience, and more.
+
+
+Also you can view your created resume in a pre-created template by running the following command:
+
+```bash
+npm run resume
+```
+
+This will actually start a server on which your resume will be hosted you can view it in your browser's preview on that particular port number
 
 ### Example Commands
 
