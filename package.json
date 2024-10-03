@@ -3,13 +3,12 @@
   "version": "2.0.0",
   "main": "index.js",
   "bin": {
-    "terminal-resume": "index.js",
-    "Resume": "main.js"
+    "terminal-resume": "index.js"
   },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "Resume": "node main.js"
+    "resume": "node main.js"
   },
   "keywords": [],
   "author": "Ishu Gupta",
