@@ -164,20 +164,19 @@ await new Promise(resolve => {
 
 async function displayResume(){
       cfonts.say('MY\nRESUME', {
-	font: 'simple',              // define the font face
-	align: 'center',              // define text alignment
-	colors: ['system'],         // define all colors
-	background: 'transparent',  // define the background color, you can also use `backgroundColor` here as key
-	letterSpacing: 1,           // define letter spacing
-	lineHeight: 0,              // define the line height
-	space: true,                // define if the output text should have empty lines on top and on the bottom
-	maxLength: '10',             // define how many character can be on one line
+	font: 'simple',              
+	align: 'center',              
+	colors: ['system'],         
+	background: 'transparent',  
+	letterSpacing: 1,          
+	lineHeight: 0,              
+	space: true,                
+	maxLength: '10',            
 	gradient: ['red', 'yellow'], 
-    // define your two gradient colors
-	independentGradient: false, // define if you want to recalculate the gradient for each new line
-	transitionGradient: false,  // define if this is a transition between colors directly
-	rawMode: false,             // define if the line breaks should be CRLF (`\r\n`) over the default LF (`\n`)
-	env: 'node'                 // define the environment cfonts is being executed in
+	independentGradient: false,
+	transitionGradient: false, 
+	rawMode: false,            
+	env: 'node'                
 });
 if (!fs.existsSync(dataFilePath)) {
 
@@ -294,20 +293,19 @@ fs.writeFileSync(dataFilePath, JSON.stringify( resumeData, null, 2));
 
  console.log(chalk.blue('MY NAME IS : \n'))
         cfonts.say(parsedData['Name'], {
-	font: 'tiny',              // define the font face
-	align: 'center',              // define text alignment
-	colors: ['system'],         // define all colors
-	background: 'transparent',  // define the background color, you can also use `backgroundColor` here as key
-	letterSpacing: 1.5,           // define letter spacing
-	lineHeight: 0,              // define the line height
-	space: true,                // define if the output text should have empty lines on top and on the bottom
-	maxLength: '10',             // define how many character can be on one line
+	font: 'tiny',              
+	align: 'center',            
+	colors: ['system'],       
+	background: 'transparent',  
+	letterSpacing: 1.5,       
+	lineHeight: 0,   
+	space: true,                
+	maxLength: '10',         
 	gradient: ['red', 'yellow'], 
-    // define your two gradient colors
-	independentGradient: false, // define if you want to recalculate the gradient for each new line
-	transitionGradient: false,  // define if this is a transition between colors directly
-	rawMode: false,             // define if the line breaks should be CRLF (`\r\n`) over the default LF (`\n`)
-	env: 'node'                 // define the environment cfonts is being executed in
+	independentGradient: false, 
+	transitionGradient: false, 
+	rawMode: false,          
+	env: 'node'               
 });
 
        // Display available commands
@@ -375,20 +373,19 @@ async function handleCommands(){
         
        found = true 
            cfonts.say(parsedData['Name'], {
-	font: 'tiny',              // define the font face
-	align: 'center',              // define text alignment
-	colors: ['system'],         // define all colors
-	background: 'transparent',  // define the background color, you can also use `backgroundColor` here as key
-	letterSpacing: 1.5,           // define letter spacing
-	lineHeight: 0,              // define the line height
-	space: true,                // define if the output text should have empty lines on top and on the bottom
-	maxLength: '10',             // define how many character can be on one line
+	font: 'tiny',          
+	align: 'center',          
+	colors: ['system'],       
+	background: 'transparent',  
+	letterSpacing: 1.5,           
+	lineHeight: 0,         
+	space: true,              
+	maxLength: '10',            
 	gradient: ['red', 'yellow'], 
-    // define your two gradient colors
-	independentGradient: false, // define if you want to recalculate the gradient for each new line
-	transitionGradient: false,  // define if this is a transition between colors directly
-	rawMode: false,             // define if the line breaks should be CRLF (`\r\n`) over the default LF (`\n`)
-	env: 'node'                 // define the environment cfonts is being executed in
+	independentGradient: false, 
+	transitionGradient: false, 
+	rawMode: false,           
+	env: 'node'               
 });
             break;
     case 'show designation':
