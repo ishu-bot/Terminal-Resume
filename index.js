@@ -4,9 +4,8 @@ import ora from 'ora';
 import cfonts from 'cfonts';
 import inquirer from 'inquirer';
 import fs from 'fs';
-import path from 'path';
 
-const dataFilePath = path.join('resumeData.json');
+const dataFilePath = 'resumeData.json';
 let parsedData = ''
 let resumeData = {}; 
 let helpMode = false;
@@ -54,7 +53,7 @@ async function customFieldCreator() {
             },
         ]);
 
-    if(alignment.toUpperCase() !== 'LIST' && alignment.toUpperCase() !== 'LINE') {
+    if(alignment.toUpperCase().trim() !== 'LIST' && alignment.toUpperCase().trim() !== 'LINE') {
             
 console.log(chalk.rgb(255,0,0)('ENTER CORRECT ALIGNMENT VALUES ! '))
  
@@ -85,24 +84,28 @@ console.log(chalk.rgb(255,0,0)('ENTER CORRECT ALIGNMENT VALUES ! '))
 
 return;
     }
-
-    if(!resumeData[alignment.toUpperCase()]){
-resumeData[alignment.toUpperCase()] = {}
+    
+const align = alignment.toUpperCase().trim();
+const key = field.toLowerCase().trim();
+const val = value.toLowerCase().trim();
+    
+    if(!resumeData[align]){
+resumeData[align] = {}
     }
     
-    if(alignment.toUpperCase() === 'LIST'){
+    if(align === 'LIST'){
 
-        resumeData[alignment.toUpperCase()][field.toLowerCase()] = value.split(',').map(data => data.trim());
+        resumeData[align][key] = val.split(',').map(data => data.trim());
 
- if(resumeData[alignment.toUpperCase()][field.toLowerCase()].length === 0 || resumeData[alignment.toUpperCase()][field.toLowerCase()].some(data => data === '' )){
+ if(resumeData[align][key].length === 0 || resumeData[align][key].some(data => data === '' )){
      console.log(chalk.red('Please enter skills in the correct format, separated by commas.'));
 
-delete resumeData[alignment.toUpperCase()][field.toLowerCase()]
+delete resumeData[align][key]
      
      await customFieldCreator()
      
  }
-    }else {     resumeData[alignment.toUpperCase()][field.toLowerCase()] = value 
+    }else {     resumeData[align][key] = val 
     }
 
     if(helpMode === true){ 
@@ -116,9 +119,11 @@ console.log(chalk.black('YOU CAN EXIT BY TYPING "EXIT CUSTOM" AND ENTER AND IF W
             },
         ]);
 
- if(command.toUpperCase() === 'EXIT CUSTOM'){
+    const order = command.toUpperCase().trim()
+
+ if(order === 'EXIT CUSTOM'){
     return
- }else if(command.toUpperCase() === 'MORE'){
+ }else if(order === 'MORE'){
     await customFieldCreator()
     }else{
      console.log(chalk.rgb(255,0,0)('ENTER CORRECT COMMAND ! WE ARE CONSIDERING THIS AS "EXIT CUSTOM" '))
@@ -189,9 +194,11 @@ console.log(chalk.rgb(255,0,0)('⚠️  WARNING: YOU HAVE NOT STILL CREATED YOUR
             },
         ]);
 
-    if(help.toLowerCase() === 'y'){
+    const guider = help.toLowerCase().trim()
+    
+    if(guider === 'y'){
         helpMode = true
-    }else if(help.toLowerCase() !== 'y' && help.toLowerCase() !== 'n'){
+    }else if(guider !== 'y' && guider !== 'n'){
         helpMode = false
 console.log(chalk.rgb(255,0,0)('ENTER CORRECT VALUES IT CAN BE EITHER y OR n, WE ARE GOING TO TAKE IT AS NO!'))
     }else {
@@ -225,12 +232,12 @@ console.log(chalk.blue('✨ Tip: For a more beautiful resume, please enter field
  if (info === 'Skills' || info === 'Projects' || info === 'Contact-Info' || info === 'Experience') {
 
 
-        resumeData[info] = response[info].split(',').map(Data => Data.trim()); 
+        resumeData[info] = response[info].trim().split(',').map(Data => Data.trim()); 
 
 await formatChecker(info) 
      
     } else {
-        resumeData[info] = response[info];
+        resumeData[info] = response[info].trim();
  }
         }
 
@@ -246,19 +253,22 @@ console.log(chalk.blue(
             },
         ]);
 
-    if(something.toUpperCase() === 'CUSTOM'){
+    const thing = something.toUpperCase().trim() 
+    
+    if( thing === 'CUSTOM'){
     
       if(helpMode === true){ console.log(chalk.hex('#FFD700')('CONGRATULATIONS! NOW YOU CAN CREATE CUSTOM FIELDS \n'))
  }
         await customFieldCreator()
         
-if(helpMode === true){ console.log(chalk.hex('#FFD700')('CONGRATULATIONS! NOW YOU CAN CREATE CUSTOM FIELDS \n'))                         }
-    }else if (something.toUpperCase() === 'NOTHING'){
-      
-    if(helpMode === true){ console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
- }
+console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
+        
+    }else if (thing === 'NOTHING'){
+       console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
+
     }else{
         console.log(chalk.rgb(255,0,0)('⚠️  WARNING: ENTER FROM ONLY CUSTOM OR NOTHING, WE ARE GOING TO TAKE IT AS NOTHING!'))
+  console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
     }
 
         try {
@@ -334,9 +344,8 @@ if (parsedData.LINE) {
         
 console.log(chalk.hex('#800080')('Type "exit" to quit.'));
 console.log(chalk.hex('#80003D')('You can clear the previous data by typing "clear" \n'));
+console.log(chalk.hex('#fgff00')('YOU CAN ALSO SEE YOUR RESUME IN BROWSER ON TEMPLATE WITH DIFFERENT THEMES BY RUNNING THE COMMAND - "npm run resume" BUT BEFORE THAT EXIT FROM THIS SCREEN BY USING THE COMMAND - "exit" \n '));
  
-
-
     await handleCommands()
     }
 }
@@ -359,7 +368,7 @@ async function handleCommands(){
     ]);
 
     let found = false;
-    const generalCommand = command.toLowerCase()
+    const generalCommand = command.toLowerCase().trim()
 
     switch (generalCommand) {
         case 'show name':
@@ -500,4 +509,3 @@ if (parsedData.LIST) {  Object.keys(parsedData.LIST).forEach(Data => {
 }
 
 displayResume()
-
