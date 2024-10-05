@@ -1,11 +1,16 @@
 #!/usr/bin/env node
-import chalk from 'chalk';
 import ora from 'ora';
 import cfonts from 'cfonts';
 import inquirer from 'inquirer';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import chalk from 'chalk'; 
 
-const dataFilePath = 'resumeData.json';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dataFilePath = path.join(__dirname,'resumeData.json');
 let parsedData = ''
 let resumeData = {}; 
 let helpMode = false;
@@ -15,7 +20,33 @@ let helpMode = false;
  * Checks the format of the provided data.
  * @param {string} field - The field to check.
  */
-console.log(parsedData)
+async function chooseTemplate(){
+    
+ let templateChoosed = 'Classic Elegance';
+    
+    try {
+        const {template} = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'template',
+                message: `Choose template:`,
+                choices: [
+                    'Classic Elegance',
+                    'Vibrant Modern'
+                ],
+            },
+        ]);
+
+ templateChoosed = template.toLowerCase().trim();
+
+resumeData['Template'] = templateChoosed;     
+  } catch (error) {
+        console.error('Error during prompt:', error.message);
+        return res.status(500).send('Error during prompt.');
+    }
+
+}
+
 async function formatChecker(field) {
     if(resumeData[field].length === 0 || resumeData[field].some(data => data === '' )){
      console.log(chalk.red('Please enter skills in the correct format, separated by commas.'));
@@ -53,7 +84,9 @@ async function customFieldCreator() {
             },
         ]);
 
-    if(alignment.toUpperCase().trim() !== 'LIST' && alignment.toUpperCase().trim() !== 'LINE') {
+    const align = alignment.toUpperCase().trim();
+    
+    if(align !== 'LIST' && align !== 'LINE') {
             
 console.log(chalk.rgb(255,0,0)('ENTER CORRECT ALIGNMENT VALUES ! '))
  
@@ -85,7 +118,7 @@ console.log(chalk.rgb(255,0,0)('ENTER CORRECT ALIGNMENT VALUES ! '))
 return;
     }
     
-const align = alignment.toUpperCase().trim();
+
 const key = field.toLowerCase().trim();
 const val = value.toLowerCase().trim();
     
@@ -164,19 +197,19 @@ await new Promise(resolve => {
 
 async function displayResume(){
       cfonts.say('MY\nRESUME', {
-	font: 'simple',              
-	align: 'center',              
+	font: 'simple',             
+	align: 'center',            
 	colors: ['system'],         
 	background: 'transparent',  
-	letterSpacing: 1,          
+	letterSpacing: 1,           
 	lineHeight: 0,              
 	space: true,                
 	maxLength: '10',            
 	gradient: ['red', 'yellow'], 
-	independentGradient: false,
-	transitionGradient: false, 
-	rawMode: false,            
-	env: 'node'                
+	independentGradient: false, 
+	transitionGradient: false,  
+	rawMode: false,             
+	env: 'node'                 
 });
 if (!fs.existsSync(dataFilePath)) {
 
@@ -207,7 +240,7 @@ console.log(chalk.rgb(255,0,0)('ENTER CORRECT VALUES IT CAN BE EITHER y OR n, WE
     if (helpMode === true) { console.log(chalk.blue(
 '☝️  STEP 1: ENTER SOME COMPULSORY CRITERIAS THAT WE PROMPT YOU FOR. \n'))
     }
- const informations = ['Name','Designation', 'Description','Skills', 'Experience','Projects','Contact-Info']
+ const informations = ['Name','Designation', 'Description','Skills', 'Experience','Projects','Contact-Info','Template']
 
 
 
@@ -215,9 +248,12 @@ console.log(chalk.rgb(255,0,0)('ENTER CORRECT VALUES IT CAN BE EITHER y OR n, WE
 
 if(info === 'Experience'){
 
-console.log(chalk.blue('✨ Tip: For a more beautiful resume, please enter field experience and projects in this format: "Heading - Description" with a space before and after the " - ". This will enhance the layout!'));
+console.log(chalk.blue('✨ Tip: For a more beautiful resume, if you have a Heading and Description then please enter field experience and projects in this format: "Heading - Description" with a space before and after the " - ". This will enhance the layout!'));
 
 }
+if(info === 'Template'){
+    await chooseTemplate()
+}else{
         const response = await inquirer.prompt([
             {
                 type: 'input',
@@ -238,6 +274,7 @@ await formatChecker(info)
     } else {
         resumeData[info] = response[info].trim();
  }
+    }
         }
 
         if(helpMode === true) {
@@ -260,21 +297,22 @@ console.log(chalk.blue(
  }
         await customFieldCreator()
         
-console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
+console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT BY AGAIN RUNNING THE SAME COMMAND - "npx terminal-resume"\n'))
         
     }else if (thing === 'NOTHING'){
-       console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
+       console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT BY AGAIN RUNNING THE SAME COMMAND - "npx terminal-resume"\n'))
 
     }else{
         console.log(chalk.rgb(255,0,0)('⚠️  WARNING: ENTER FROM ONLY CUSTOM OR NOTHING, WE ARE GOING TO TAKE IT AS NOTHING!'))
-  console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT\n'))
+  console.log(chalk.hex('#FFD700')('GOOD WORK!\nYOUR RESUME IS READY!\nYOU CAN NOW ACCESS IT BY AGAIN RUNNING THE SAME COMMAND - "npx terminal-resume"\n'))
     }
 
         try {
 fs.writeFileSync(dataFilePath, JSON.stringify( resumeData, null, 2));
 } catch (error) {
     console.error(chalk.rgb(255,0,0)('Error writing resume data:', error.message));
-    // Optionally, prompt to create a new resume
+    console.log(chalk.rgb(255,0,0)('CREATE A NEW RESUME BY RUNNING THE SCRIPT AGAIN'))
+        return
     }
 
  
@@ -285,7 +323,8 @@ fs.writeFileSync(dataFilePath, JSON.stringify( resumeData, null, 2));
     parsedData = JSON.parse(data);
 } catch (error) {
     console.error(chalk.rgb(255,0,0)('Error reading resume data:', error.message));
-    // Optionally, prompt to create a new resume
+console.log(chalk.rgb(255,0,0)('CREATE A NEW RESUME BY RUNNING THE SCRIPT AGAIN'))
+        return
     }
     await showLoadingSpinner()
 
@@ -293,19 +332,19 @@ fs.writeFileSync(dataFilePath, JSON.stringify( resumeData, null, 2));
 
  console.log(chalk.blue('MY NAME IS : \n'))
         cfonts.say(parsedData['Name'], {
-	font: 'tiny',              
+	font: 'tiny',             
 	align: 'center',            
-	colors: ['system'],       
+	colors: ['system'],         
 	background: 'transparent',  
-	letterSpacing: 1.5,       
-	lineHeight: 0,   
+	letterSpacing: 1.5,         
+	lineHeight: 0,              
 	space: true,                
-	maxLength: '10',         
+	maxLength: '10',            
 	gradient: ['red', 'yellow'], 
 	independentGradient: false, 
-	transitionGradient: false, 
-	rawMode: false,          
-	env: 'node'               
+	transitionGradient: false,  
+	rawMode: false,             
+	env: 'node'                 
 });
 
        // Display available commands
@@ -340,9 +379,9 @@ if (parsedData.LINE) {
 });    
                 }
         
-console.log(chalk.hex('#800080')('Type "exit" to quit.'));
+console.log(chalk.hex('#800080')('Type "exit" to quit.\n'));
 console.log(chalk.hex('#80003D')('You can clear the previous data by typing "clear" \n'));
-console.log(chalk.hex('#fgff00')('YOU CAN ALSO SEE YOUR RESUME IN BROWSER ON TEMPLATE WITH DIFFERENT THEMES BY RUNNING THE COMMAND - "npm run resume" BUT BEFORE THAT EXIT FROM THIS SCREEN BY USING THE COMMAND - "exit" \n '));
+console.log(chalk.hex('#fgff00')('YOU CAN ALSO SEE YOUR RESUME IN BROWSER ON TEMPLATE WITH DIFFERENT THEMES BY RUNNING THE COMMAND - "npx resume" BUT BEFORE THAT EXIT FROM THIS SCREEN BY USING THE COMMAND - "exit" \n '));
  
     await handleCommands()
     }
@@ -373,21 +412,22 @@ async function handleCommands(){
         
        found = true 
            cfonts.say(parsedData['Name'], {
-	font: 'tiny',          
-	align: 'center',          
-	colors: ['system'],       
+	font: 'tiny',              
+	align: 'center',            
+	colors: ['system'],         
 	background: 'transparent',  
-	letterSpacing: 1.5,           
-	lineHeight: 0,         
-	space: true,              
-	maxLength: '10',            
+	letterSpacing: 1.5,         
+	lineHeight: 0,              
+	space: true,                
+	maxLength: '10',                lineHeight: 0,
 	gradient: ['red', 'yellow'], 
 	independentGradient: false, 
-	transitionGradient: false, 
-	rawMode: false,           
-	env: 'node'               
+	transitionGradient: false,  
+	rawMode: false,             
+	env: 'node'                 
 });
             break;
+            
     case 'show designation':
     found = true 
   console.log(chalk.black(parsedData['Designation']))
@@ -505,4 +545,4 @@ if (parsedData.LIST) {  Object.keys(parsedData.LIST).forEach(Data => {
     await handleCommands()
 }
 
-displayResume()
+await displayResume()
