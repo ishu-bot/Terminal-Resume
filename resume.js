@@ -1,13 +1,19 @@
-import express from 'express';
-import fs from 'fs';
+#!/usr/bin/env node
+const express = require('express');
+const fs = require('fs');
+const inquirer = require('inquirer');
+const path = require('path');
 
 const app = express();
 
+
+
+app.set('views', path.join(__dirname, 'views')); 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 
 // Serve static files (like CSS)
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname,'public')));
 
 let parsedData = '';
 
@@ -34,7 +40,7 @@ function formatter(field) {
 
 // Define a route to render the resume
 app.get('/', async (_, res) => {
-    const dataFilePath = 'resumeData.json';
+    const dataFilePath = path.join(__dirname, 'resumeData.json');
     
     try {
         const data = fs.readFileSync(dataFilePath);
@@ -70,15 +76,24 @@ Object.keys(parsedData.LINE).forEach(Data => {
    all[Data.toLowerCase()] = parsedData['LINE'][Data]
 })
 }
+    
+    switch (parsedData['Template']) {
+       case 'vibrant modern':
 
-
-
-    // Render the resume template with user data
-    res.render('home', {information:all});
+   res.render('vibrantModern', {information:all});
+            
+          break;
+       default:
+                            res.render('classicElegance', {information:all});
+            
+          break;
+    } 
+    
 });
 
+    
 // Start the server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-})
+});
