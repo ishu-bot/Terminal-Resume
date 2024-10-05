@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= information.name %>'s Resume</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <header>
+
+<section class="theme-selector">
+        <h2>Select Theme</h2>
+        <select id="theme-select">
+            <option value="classiclight">Classic Light</option>
+            <option value="pasteldream">Pastel Dream</option>
+            <option value="neondark">Neon Dark</option>
+        </select>
+    </section>
+
+        <h1><%= information.name %></h1>
+         <p><%= information.designation %></p>
+        <hr>
+    </header>
+
+
+
+<section class="description">
+        <h2>Description</h2>
+        <ul>
+            <% if (information.description) { %>     
+                 <li><%= information.description %></li>
+            <% } else { %>
+                <li>No Description provided.</li>
+            <% } %>
+        </ul>
+    </section>
+
+    <section class="skills">
+        <h2>Skills</h2>
+        <ul>
+            <% if (information.skills && information.skills.length) { %>
+                <% information.skills.forEach(skill => { %>
+                    <li><%= skill %></li>
+                <% }) %>
+            <% } else { %>
+                <li>No skills provided.</li>
+            <% } %>
+        </ul>
+    </section>
+                
+    <section class="projects">
+        <h2>Projects</h2>
+        <ul>
+<% if (information.projects && information.projects.length) { %>
+<% information.projects.forEach(project => { %>
+
+<% if(typeof project === 'object'){ %>
+<li>
+ <h3><%= project.head %></h3>
+ <span><%= project.tail %></span>
+ </li>
+<% } else { %>
+<li><%= project %></li>
+<% } %>
+<% }) %>
+<% }else{ %>
+<li>No projects provided.</li>
+<% } %>
+                                      </ul>
+    </section>
+          
+<section class="experience">
+        <h2>Experience</h2>
+        <ul>
+<% if (information.experience && information.experience.length) { %>
+<% information.experience.forEach(job => { %>
+
+<% if(typeof job === 'object'){ %>
+<li>
+ <h3><%= job.head %></h3>
+ <span><%= job.tail %></span>
+ </li>
+<% } else if(typeof job === 'string'){ %>
+<li><%= job %></li>
+<% } %>
+<% }) %>
+<% }else{ %>
+<li>No Experience provided.</li>
+<% } %>
+                                      </ul>
+    </section>
+
+    <section class="contact-info">
+        <h2>Contact Information</h2>
+        <ul>
+            <% if (information.contactInfo && information.contactInfo.length) { %>
+                <% information.contactInfo.forEach(info => { %>
+                    <li><%= info %></li>
+                <% }) %>
+            <% } else { %>
+                <li>No contact information provided.</li>
+            <% } %>
+        </ul>
+            </section>
+
+<% let count = 1 %> 
+
+<% Object.keys(information).forEach(key => { %>
+    <% if(count > 7){ %>
+<section >
+        <h2><%= key.charAt(0).toUpperCase() + key.slice(1).toLowerCase() %></h2>
+        <ul>
+    <% if(information[key]){ %> 
+            <% if (Array.isArray(information [key])) { %>
+                <% information [key].forEach(info => { %>
+    <li><%= info %></li>
+                <% }) %>
+            <% }else{ %>
+<li><%= information[key] %></li>
+<% } %>
+            <% }else{ %>
+<li>No <%= key.toLowerCase() %> provided.</li>
+        <% } %>            
+      <% } %>
+     <% count++ %>
+  <% }) %>
+        </ul>
+            </section>
+
+    <footer class="footer">
+        <p>Generated on: <%= new Date().toLocaleDateString() %></p>
+    </footer>
+
+<script>
+        document.getElementById('theme-select').addEventListener('change', function() {
+            const selectedTheme = this.value;
+            const body = document.body;
+
+            // Remove any existing theme classes
+            body.classList.remove('classiclight', 'neondark','pasteldream');
+
+            // Add the selected theme class
+            if (selectedTheme === 'classiclight') {
+                body.classList.add('classiclight');
+            } else if (selectedTheme === 'neondark'){
+          body.classList.add('neondark');
+            } else {
+     body.classList.add('pasteldream');
+            }
+        });
+    </script>
+
+</body>
+</html>
