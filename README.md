@@ -35,6 +35,7 @@ npm install terminal-resume
 
 ## Usage
 
+### For creating and showing your resume on CLI
 After installation, you can create your resume by running the following command in your terminal:
 
 ```bash
@@ -43,11 +44,18 @@ npx terminal-resume
 
 Follow the interactive prompts to enter your information, including name, designation, skills, experience, and more.
 
+And after creating your resume Rerun the same command to show up your resume on CLI
 
+```bash
+npx terminal-resume
+```
+Don't worry about the resume data persistence it will be persisted in your personal file system in a file called resumeData.json
+
+### For viewing your resume in browser's preview
 Also you can view your created resume in a pre-created template by running the following command:
 
 ```bash
-npm run resume
+npx resume
 ```
 
 This will actually start a server on which your resume will be hosted you can view it in your browser's preview on that particular port number
@@ -75,10 +83,23 @@ clear
 ## Themes
 
 You can select different themes for your resume:
-Classic Light (default)
-Pastel Dream
-Neon Dark
-Select a theme from the dropdown menu when prompted during the resume creation process.
+
+- Classic Light (default)
+- Pastel Dream
+- Neon Dark
+  
+Select a theme from the dropdown menu in your resume.
+
+## Templates
+You can also select different templates for your resume:
+
+- Classic Elegance
+- Vibrant Modern
+
+Select a template when prompted during the initial information taking process.
+
+### NOTE
+I want people to contribute more templates in this project so that, This package can have a more variety of templates to be used by different users according to their fit.
 
 ## Custom Fields 
 
@@ -112,6 +133,3 @@ Author: Ishu Gupta
 Email: devishu547@gmail.com
 GitHub: ishu-bot
 Happy coding! 🎉
-
-
-
